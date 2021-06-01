@@ -1,7 +1,7 @@
 const Job = require('../models/Job');
 
-const invoiceIdGenerator = async () => {
-    const jobs = await Job.find({});
+const invoiceIdGenerator = async (userId) => {
+    const jobs = await Job.find({user: userId});
     let num = 0;
     jobs.forEach(job => {
         num+=job.payments.length;

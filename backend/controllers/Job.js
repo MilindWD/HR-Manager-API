@@ -13,7 +13,7 @@ const addJob = async (req, res) => {
   try {
     //adds a advance invoice only if advance > 0
     if (parseInt(req.body.advanceAmount) > 0) {
-      const invoiceId = await invoiceIdGenerator();
+      const invoiceId = await invoiceIdGenerator(req.user._id);
       req.body.payments = [
         {
           amount: req.body.advanceAmount,
@@ -100,7 +100,7 @@ const makePayment = async (req, res) => {
     const job = await Job.findById(req.params.id);
     job.balanceAmount -= req.body.amount;
     job.totalAmount += req.body.amount;
-    req.body.invoiceId = await invoiceIdGenerator();
+    req.body.invoiceId = await invoiceIdGenerator(req.job.user);
     job.payments.push(req.body);
     const updated = await job.save();
     res.json(updated);
