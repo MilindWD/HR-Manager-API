@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema({
     },
     address: {
         type: String
+    },
+    contact: {
+        type: String
     }
 }, {
     timestamps: true,

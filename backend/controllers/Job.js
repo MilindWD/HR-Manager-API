@@ -40,7 +40,7 @@ const findJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id)
       .populate("employee", { name: 1 })
-      .populate("user", { name: 1, address: 1 });
+      .populate("user", { name: 1, address: 1, contact: 1 });
     res.json(job);
   } catch (error) {
     console.log(error.message);
@@ -100,7 +100,7 @@ const makePayment = async (req, res) => {
     const job = await Job.findById(req.params.id);
     job.balanceAmount -= req.body.amount;
     job.totalAmount += req.body.amount;
-    req.body.invoiceId = await invoiceIdGenerator(req.job.user);
+    req.body.invoiceId = await invoiceIdGenerator(job.user);
     job.payments.push(req.body);
     const updated = await job.save();
     res.json(updated);
