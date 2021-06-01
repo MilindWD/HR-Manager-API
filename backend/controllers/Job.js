@@ -40,7 +40,7 @@ const findJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id)
       .populate("employee", { name: 1 })
-      .populate("user", { name: 1 });
+      .populate("user", { name: 1, address: 1 });
     res.json(job);
   } catch (error) {
     console.log(error.message);
