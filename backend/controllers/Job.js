@@ -84,7 +84,7 @@ const findAllJobsOfUser = async (req, res) => {
 const closeJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
-    job.closingDate = moment().format("DD-MM-YYYY");
+    job.closingDate = req.body.closingDate;
     const updated = await job.save();
     res.json(updated);
   } catch (error) {
