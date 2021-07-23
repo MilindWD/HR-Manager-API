@@ -54,5 +54,18 @@ const addEmployee = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = {getEmployees, getEmployee, getEmployeesOfUser, addEmployee}
+//@desc update a employee 
+//@rote POST /api/employee/update
+//@access User  
+const  updateEmployee = asyncHandler(async (req, res) => {
+    try {
+        const employee = await Employee.findByIdAndUpdate(req.params.id, req.body);
+        res.json(employee);
+    } catch (error) {
+        console.log(error.message);
+        res.status(404).json({message: 'Employee not found'});
+    }
+})
+
+module.exports = {getEmployees, getEmployee, getEmployeesOfUser, addEmployee, updateEmployee};
 
